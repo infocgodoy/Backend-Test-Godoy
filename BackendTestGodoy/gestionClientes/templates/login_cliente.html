@@ -1,0 +1,30 @@
+<html>
+<head>
+    
+    <title>Cliente</title>
+    
+</head>
+<body>
+    <h1>Bienvenido <strong>{{cliente.0.nombre}}</strong></h1>
+    
+    <h1>Hoy <strong>{{hoy}}</strong></h1>
+
+    <h1>Ultimo dia <strong>{{ultimo.fecha}}</strong></h1>
+
+    <h1>Es <strong>{{pedido}}</strong> por que son las <strong>{{hoy.hour}}</strong> con <strong>{{hoy.minute}}</strong></h1>
+    {% if pedido == 'Tarde' %}
+
+        <p>Estimado son mas de las 11:00 AM ya no puede pedir su comida favorita</p>        
+
+    {% elif comio == 1 %}      
+
+        <p>Ya escogio la comida de hoy</p>
+
+    {% else %}
+
+        <p>Elija su comida favorita</p>
+
+    {% endif %}
+    
+</body>
+</html>

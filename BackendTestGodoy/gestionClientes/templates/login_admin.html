@@ -1,0 +1,28 @@
+<html>
+<head>
+    
+    <title>Admin</title>
+    
+</head>
+<body>
+    
+    <h1>Bienvenido Administradora <strong>{{cliente.0.nombre}}</strong></h1>
+    
+    <form action="/nuevo_menu/" method="GET">
+
+        <p>Ingresar cantidad de opciones de Menu: <input type="text" name="nuevo_menu">
+        
+        <input type="submit" value="Crear"></p>
+            
+    </form>
+
+    <form action="/listar_menu/" method="GET">
+
+        <p>Ver menus solicitados
+        
+        <input type="submit" value="Ver"></p>
+            
+    </form>
+
+</body>
+</html>
