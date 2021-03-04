@@ -1,0 +1,24 @@
+<html>
+<body>
+
+    <p>Esta apunto de Ingresar <strong>{{arr_num_platos|length}}</strong> platos</p>
+
+    <form action="/nuevos_platos/" method="POST">{% csrf_token %}
+
+        <input name="num_hidden[]" type="hidden" value={{arr_num_platos|length}}>
+
+    {% for plato in arr_num_platos %}
+
+        <p>----------------- Plato -------------------</p>        
+        <p>Nombre: <input type="text" name="nombre_{{plato}}"></p>
+        <p>Precio: <input type="number" name="precio_plato_{{plato}}"></p>
+        <p>Tipo: <input type="text" name="tipo_plato_{{plato}}"></p>
+            
+    {% endfor %}
+    
+    <p><input type="submit" value="Enviar">
+    
+    </form>
+    
+</body>
+</html>

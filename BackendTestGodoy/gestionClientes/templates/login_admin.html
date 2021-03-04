@@ -10,19 +10,27 @@
     
     <form action="/nuevo_menu/" method="GET">
 
-        <p>Ingresar cantidad de opciones de Menu: <input type="text" name="nuevo_menu">
+        <p>Ingresar Menus del dia: <input type="number" name="num_menus" style="width: 40px">
         
         <input type="submit" value="Crear"></p>
-            
+
     </form>
 
-    <form action="/listar_menu/" method="GET">
+    <form action="/nuevos_platos/" method="GET">
+
+        <p>Ingresar Platos nuevos: <input type="number" name="num_platos" style="width: 40px">
+        
+        <input type="submit" value="Crear"></p>
+
+    </form>
+
+    <form action="/ver_pedidos/" method="GET">
 
         <p>Ver menus solicitados
         
         <input type="submit" value="Ver"></p>
             
-    </form>
+    </form>    
 
 </body>
 </html>

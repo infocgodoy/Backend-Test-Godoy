@@ -15,20 +15,28 @@ class Clientes(models.Model):
     def __str__(self):
         return 'Nombre %s, Apellido %s, Direccion %s, Email %s, Celular %s, Rut %s, Group %s, Vigente %s' % (self.nombre, self.apellido, self.direccion, self.email, self.celular, self.rut, self.group, self.vigente)
 
-class Comidas(models.Model):
+class Platos(models.Model):
     nombre=models.CharField(max_length=100)
-    precio=models.IntegerField()
-    detalle=models.CharField(max_length=300)
-    flag=models.BooleanField()
-    fecha=models.DateTimeField()
+    precio=models.IntegerField()    
+    tipo=models.CharField(max_length=100)   
     vigente=models.BooleanField()
 
     def __str__(self):
-        return 'Nombre %s, Precio %s, Detalle %s, Flag %s, Fecha %s, Vigente %s' % (self.nombre, self.precio, self.detalle, self.flag, self.fecha, self.vigente)
+        return 'Nombre %s, Precio %s, Tipo %s, Vigente %s' % (self.nombre, self.precio, self.tipo, self.vigente)
+
+class Menus(models.Model):
+    id_platos=models.IntegerField()
+    nombre=models.CharField(max_length=100)            
+    fecha=models.DateField()
+    vigente=models.BooleanField()
+
+    def __str__(self):
+        return 'Id platos %s, Nombre %s, Fecha %s, Vigente %s' % (self.id_platos, self.nombre, self.fecha, self.vigente)
 
 class Pedidos(models.Model):
     id_comida=models.IntegerField()
     id_cliente=models.IntegerField()
+    detalle=models.CharField(max_length=300)
     fecha=models.DateTimeField()
     vigente=models.BooleanField()
 
