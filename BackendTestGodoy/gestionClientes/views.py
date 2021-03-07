@@ -1,10 +1,20 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from gestionClientes.models import Clientes, Pedidos, Platos, Menus
 from django.utils import timezone
 from datetime import datetime
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+
+def suma(x, y):
+
+    return x + y
+@login_required
+def product_detail(request, pk):
+    plato = get_object_or_404(Platos, pk=pk)
+
+    return render(request, 'plato_detalle.html', {'plato': plato})
 
 def login(request):
 
@@ -279,7 +289,7 @@ def ver_pedidos_v(request):
     
     fecha_seleccionada=request.GET["date"]
     now=timezone.now()
-    hoy=now.day
+    
     pedidos=Pedidos.objects.filter(vigente='1',date=fecha_seleccionada).order_by('fecha')
     clientes=Clientes.objects.filter(vigente='1') 
     arreglo_pedidos_completos = []  
@@ -290,3 +300,5 @@ def ver_pedidos_v(request):
                 arreglo_pedidos_completos.append({'name': cliente.nombre + " " + cliente.apellido,'id_cliente': pedido.id_cliente, 'nombre_opcion': pedido.opcion, 'fecha': pedido.date})
     
     return render(request, "listar_pedidos.html", {"pedidos":arreglo_pedidos_completos})
+
+

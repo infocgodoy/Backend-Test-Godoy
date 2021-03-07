@@ -21,6 +21,10 @@ class Platos(models.Model):
     tipo=models.CharField(max_length=100)   
     vigente=models.BooleanField()
 
+    @property
+    def precio_mayor_a_cero(self):
+        return self.precio > 0
+
     def __str__(self):
         return 'Nombre %s, Precio %s, Tipo %s, Vigente %s' % (self.nombre, self.precio, self.tipo, self.vigente)
 
@@ -43,3 +47,5 @@ class Pedidos(models.Model):
 
     def __str__(self):
         return 'Opcion %s, Id_cliente %s, Detalle %s, Date %s, Fecha %s, Vigente %s' % (self.opcion, self.id_cliente, self.detalle, self.date, self.fecha, self.vigente)
+
+

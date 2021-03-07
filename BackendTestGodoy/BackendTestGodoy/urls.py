@@ -18,6 +18,7 @@ from django.urls import path
 from gestionClientes import views
 
 urlpatterns = [
+    path('<int:pk>', views.product_detail, name='detail'),
     path('admin/', admin.site.urls),
     path('login/', views.login),
     path('login_respuesta/', views.login_res),
@@ -25,5 +26,6 @@ urlpatterns = [
     path('nuevo_menu/', views.menus_v),
     path('modificar_menu/', views.modificar_menus_v),
     path('nuevos_platos/', views.platos_v),
-    path('ver_pedidos/', views.ver_pedidos_v),   
+    path('ver_pedidos/', views.ver_pedidos_v), 
+    
 ]
