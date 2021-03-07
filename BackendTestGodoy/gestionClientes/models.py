@@ -34,11 +34,12 @@ class Menus(models.Model):
         return 'Id platos %s, Nombre %s, Fecha %s, Vigente %s' % (self.id_platos, self.nombre, self.fecha, self.vigente)
 
 class Pedidos(models.Model):
-    id_comida=models.IntegerField()
+    opcion=models.CharField(max_length=100)
     id_cliente=models.IntegerField()
     detalle=models.CharField(max_length=300)
+    date=models.DateField()
     fecha=models.DateTimeField()
     vigente=models.BooleanField()
 
     def __str__(self):
-        return 'Id_comida %s, Id_cliente %s, Fecha %s, Vigente %s' % (self.id_comida, self.id_cliente, self.fecha, self.vigente)
+        return 'Opcion %s, Id_cliente %s, Detalle %s, Date %s, Fecha %s, Vigente %s' % (self.opcion, self.id_cliente, self.detalle, self.date, self.fecha, self.vigente)

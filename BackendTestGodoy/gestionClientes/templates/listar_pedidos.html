@@ -1,0 +1,28 @@
+<html>
+<head>
+    
+    <title>Cliente</title>
+    
+</head>
+<body>
+    <h1>Lista de pedidos segun fecha</h1>    
+    
+    {% if pedidos %}
+
+        <p>Pedidos encontrados: {{pedidos|length}}</p>
+
+        <ul>
+            {% for pedido in pedidos %}
+                <li>
+                    {{pedido.name}} &nbsp;compro {{pedido.nombre_opcion}} &nbsp;el {{pedido.fecha}}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        
+        <p>no hay pedidos</p>
+
+    {% endif %}
+    
+</body>
+</html>

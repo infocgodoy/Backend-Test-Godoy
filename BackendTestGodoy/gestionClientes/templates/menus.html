@@ -1,0 +1,38 @@
+<html>
+<body>
+
+    <p>Esta apunto de Ingresar <strong>{{arr_num_opciones|length}}</strong> Opciones para el Menu</p>
+
+    <form action="/nuevo_menu/" method="POST">{% csrf_token %}
+
+        <input name="opcions_hidden" type="hidden" value="{{arr_num_opciones|length}}">
+
+    {% for opcion in arr_num_opciones %}
+        
+        <p>----------------- Opcion {{opcion}}-------------------</p>        
+        <input name="opcions_hidden_nombre_{{opcion}}" type="hidden" value="Opcion {{opcion}}">
+        {% for plato in arr_num_platos %}
+
+            <input name="platos_hidden" type="hidden" value="{{arr_num_platos|length}}">
+            <p>
+                <select name="id_plato_{{opcion}}_{{plato}}" >
+                    <option value = 0 selected>Sin Plato</option>
+                    {% for detalle_plato in platos_vigentes %}
+                        <option value={{detalle_plato.id}}>                   
+                            {{detalle_plato.nombre}}
+                        </option>
+                    {% endfor %}
+                </select>
+            </p>
+
+        {% endfor %}
+         
+        
+    {% endfor %}
+    <p>Fecha: <input type="date" name="date"></p>
+    <p><input type="submit" value="Enviar">
+    
+    </form>
+    
+</body>
+</html>

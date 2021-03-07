@@ -10,9 +10,19 @@
     
     <form action="/nuevo_menu/" method="GET">
 
-        <p>Ingresar Menus del dia: <input type="number" name="num_menus" style="width: 40px">
+        <p>Ingresar cantidad de opciones del Menu del dia: <input type="number" name="num_menus" style="width: 40px">
         
         <input type="submit" value="Crear"></p>
+
+    </form>
+
+    <form action="/modificar_menu/" method="GET">
+        
+        <p>Modificar Menu, ingrese la fecha del dia que va a modificar:
+             
+        <input type="date" name="date" value="{{fecha_arr.0}}-{{fecha_arr.1}}-{{fecha_arr.2}}">
+        
+        <input type="submit" value="Buscar"></p>
 
     </form>
 
@@ -26,7 +36,8 @@
 
     <form action="/ver_pedidos/" method="GET">
 
-        <p>Ver menus solicitados
+        <p>Ver menus solicitados segun fecha: 
+        <input type="date" name="date" value="{{fecha_arr.0}}-{{fecha_arr.1}}-{{fecha_arr.2}}">
         
         <input type="submit" value="Ver"></p>
             

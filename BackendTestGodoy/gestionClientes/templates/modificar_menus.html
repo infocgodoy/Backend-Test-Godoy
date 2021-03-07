@@ -1,0 +1,40 @@
+<html>
+<body>
+
+    <p>Modificar Menu del dia {{arr_arreglo.0.0.fecha}}</p>    
+
+    <form action="/modificar_menu/" method="POST">{% csrf_token %}    
+
+    {% for opcion in arr_arreglo %}
+            <p>----------------- {{opcion.0.nombre_opcion}} -----------------</p>
+            <input name="opcions_hidden_nombre_{{opcion.0.nombre_opcion|last}}" type="hidden" value="{{opcion.0.nombre_opcion}}">            
+            {% for plato in opcion %}                
+                <p>
+                    <select name="id_plato_{{opcion.0.nombre_opcion|last}}_{{forloop.counter}}">
+                        <option value = {{plato.id_plato}} selected>{{plato.name}}</option>   
+                                             
+                        {% for detalle_plato in platos_vigentes %}
+                            {% if plato.id_plato != detalle_plato.id %}
+                                <option value={{detalle_plato.id}}>                   
+                                    {{detalle_plato.nombre}}
+                                </option>
+                            {% endif %}    
+                        {% endfor %}
+                        {% if plato.id_plato != 0 %}
+                                <option value=0>                   
+                                    Sin plato
+                                </option>
+                            {% endif %}
+                    </select>
+                </p>
+            {% endfor %}
+        <input name="mum_opcions_hidden" type="hidden" value={{forloop.counter}}>              
+    {% endfor %}
+    
+    <p>Fecha: <input type="date" name="date" value="{{date_arr.0}}-{{date_arr.1}}-{{date_arr.2}}"></p>
+    <p><input type="submit" value="Modificar">
+    
+    </form>
+    
+</body>
+</html>

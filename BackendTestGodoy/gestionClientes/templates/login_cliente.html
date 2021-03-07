@@ -7,7 +7,7 @@
 <body>
     <h1>Bienvenido {{cliente.nombre}} {{cliente.apellido}}</h1>
     
-    <h1>Hoy es <strong>{{hoy}}</strong></h1>    
+    <h1>Hoy es <strong>{{hoy}}</strong></h1>
     
     {% if tipo_pedido == 'tarde' %}
 
@@ -17,9 +17,39 @@
 
         <p>Ya escogio la comida del <strong>{{ultimo.fecha}}</strong></p>
 
-    {% else %}
+    {% else %}        
+        
+        <p>> ¡Hola!</p>
+        <p>> Comparto con ustedes el menú de hoy :)</p>       
+            
+        {% for opcion in arr_arreglo %}
+                <p>> {{opcion.0.nombre_opcion}}:                                                    
+                {% for plato in opcion %}
+                    {% if forloop.last %}
+                        y {{plato.name}}.
+                    {% elif forloop.first %}
+                        {{plato.name}}
+                    {% else %}
+                        , {{plato.name}}
+                    {% endif %}
+                {% endfor %}
+                </p>
+            <input name="mum_opcions_hidden" type="hidden" value={{forloop.counter}}>              
+        {% endfor %}
 
-        <p>Elija su comida favorita</p>
+        <form action="/ingresar_pedido/" method="POST">{% csrf_token %}
+            <p>Elija la Opcion del menu:
+                <select name="select_opcion">
+                    {% for opcion in arr_arreglo %}
+                        <option value = {{opcion.0.nombre_opcion|last}}>{{opcion.0.nombre_opcion}}</option>
+                    {% endfor %}
+                </select>
+            </p>            
+            <p><textarea name="comentarios" rows="5" cols="40">Escribe aquí su comida personalizada</textarea></p>
+            <input name="id_cliente" type="hidden" value={{cliente.id}}>
+            <p><input type="submit" value="Enviar"></p>
+            
+        </form>
 
     {% endif %}
     
