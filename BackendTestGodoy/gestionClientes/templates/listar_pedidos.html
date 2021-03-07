@@ -14,7 +14,7 @@
         <ul>
             {% for pedido in pedidos %}
                 <li>
-                    {{pedido.name}} &nbsp;compro {{pedido.nombre_opcion}} &nbsp;el {{pedido.fecha}}
+                    {{pedido.name}} &nbsp;compro la {{pedido.nombre_opcion}} &nbsp;el {{pedido.fecha}} &nbsp; {{pedido.detalle}}
                 </li>
             {% endfor %}
         </ul>
