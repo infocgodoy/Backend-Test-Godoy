@@ -1,6 +1,6 @@
 from mixer.backend.django import mixer
 import pytest
-
+#trate de hacer unos pocos testing en pos del tiempo, algunos eran de prueba, otros mas funcionales como este que van directo a la BD
 @pytest.mark.django_db
 class TestModels:
 

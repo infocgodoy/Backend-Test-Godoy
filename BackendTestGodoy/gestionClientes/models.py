@@ -47,7 +47,7 @@ class Pedidos(models.Model):
 
     def __str__(self):
         return 'Opcion %s, Id_cliente %s, Detalle %s, Date %s, Fecha %s, Vigente %s' % (self.opcion, self.id_cliente, self.detalle, self.date, self.fecha, self.vigente)
-
+#este modelo lo cree pensando en el futuro, si iban a automatizar el envio del menu y si iban a cambiar la hora del tope para pedir almuerzos
 class Opciones(models.Model):
     tope=models.IntegerField()    
     automatico=models.BooleanField()
