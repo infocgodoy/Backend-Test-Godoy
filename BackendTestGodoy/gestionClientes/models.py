@@ -49,10 +49,8 @@ class Pedidos(models.Model):
         return 'Opcion %s, Id_cliente %s, Detalle %s, Date %s, Fecha %s, Vigente %s' % (self.opcion, self.id_cliente, self.detalle, self.date, self.fecha, self.vigente)
 
 class Opciones(models.Model):
-    tope=models.IntegerField()
+    tope=models.IntegerField()    
     automatico=models.BooleanField()
 
     def __str__(self):
-        return 'Tope %s, automatico %s' % (self.tope, self.automatico)
-
-
+        return 'Tope %s, Automatico %s' % (self.tope, self.automatico)

@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 def suma(x, y):
 
     return x + y
-#@login_required
+@login_required
 def product_detail(request, pk):
     plato = get_object_or_404(Platos, pk=pk)
 
@@ -69,9 +69,10 @@ def login_res(request):
             hoy=now.day
             cliente_id=cliente.id
             pedido=Pedidos.objects.filter(id_cliente=cliente_id,fecha__lte=now).order_by('fecha').last()
-            opciones=Opciones.objects.filter(id=1)
-
-            if now.hour < opciones[0].tope:
+            opcion=Opciones.objects.filter(id=1)
+            
+            #se ocupa la tabla opcion para que Nora pueda cambiarlo mas facil en el futuro
+            if now.hour < opcion[0].tope:
                 
                 if pedido == None:
                     #return HttpResponse(fecha_arr[1])
@@ -289,7 +290,6 @@ def platos_v(request):
 def ver_pedidos_v(request):
     
     fecha_seleccionada=request.GET["date"]
-    
     now=timezone.now()
     
     pedidos=Pedidos.objects.filter(vigente='1',date=fecha_seleccionada).order_by('fecha')
@@ -297,14 +297,14 @@ def ver_pedidos_v(request):
     arreglo_pedidos_completos = []  
 
     for pedido in pedidos:
+        if pedido.detalle == 'Escribe aquí su comida personalizada':
+            detalle = ''
+        else:
+            detalle = 'con el detalle '+pedido.detalle
         for cliente in clientes:
             if pedido.id_cliente == cliente.id:
-                if pedido.detalle =='Escribe aquí su comida personalizada':
-                    detalle = ''
-                else:
-                    detalle = 'con el detalle ' + pedido.detalle   
-                arreglo_pedidos_completos.append({'name': cliente.nombre + " " + cliente.apellido,'id_cliente': pedido.id_cliente, 'nombre_opcion': pedido.opcion, 'fecha': pedido.date, 'detalle': detalle})
-                    
+                arreglo_pedidos_completos.append({'name': cliente.nombre + " " + cliente.apellido,'id_cliente': pedido.id_cliente, 'nombre_opcion': pedido.opcion, 'fecha': pedido.date, 'detalle':detalle})
+    
     return render(request, "listar_pedidos.html", {"pedidos":arreglo_pedidos_completos})
 
 
