@@ -7,6 +7,10 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
+def enviar_menu_v(request):
+
+    return HttpResponse('Se envio el menu del dia de hoy')  
+
 def suma(x, y):
 
     return x + y
