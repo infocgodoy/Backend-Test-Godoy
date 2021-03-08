@@ -1,0 +1,27 @@
+<html>
+<head>
+    
+    <title>Cliente</title>
+    
+</head>
+<body>
+    <p>> ¡Hola!</p>
+        <p>> Comparto con ustedes el menú de hoy :)</p>       
+            
+        {% for opcion in arr_arreglo %}
+                <p>> {{opcion.0.nombre_opcion}}:                                                    
+                {% for plato in opcion %}
+                    {% if forloop.last %}
+                        y {{plato.name}}.
+                    {% elif forloop.first %}
+                        {{plato.name}}
+                    {% else %}
+                        , {{plato.name}}
+                    {% endif %}
+                {% endfor %}
+                </p>
+            <input name="mum_opcions_hidden" type="hidden" value={{forloop.counter}}>              
+        {% endfor %}
+</body>
+</html>
+    

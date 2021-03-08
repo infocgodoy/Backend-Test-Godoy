@@ -4,12 +4,62 @@ from gestionClientes.models import Clientes, Pedidos, Platos, Menus, Opciones
 from django.utils import timezone
 from datetime import datetime
 from django.contrib.auth.decorators import login_required
+import requests
+import sys
+import getopt
 
 # Create your views here.
+def solo_menu_v(request):
 
-def enviar_menu_v(request):
+    now=timezone.now()
+    fecha_arr=[]
+    anio=now.year
+    fecha_arr.append(str(anio))
+    mes=now.month
+    fecha_arr.append(str(mes))
+    hoy=now.day
+    fecha_arr.append(str(hoy))
+    #return HttpResponse(fecha_arr[1])
+    total_menus=Menus.objects.filter(fecha=fecha_arr[0]+'-'+fecha_arr[1]+'-'+fecha_arr[2],vigente=1).order_by('nombre')
+    
+    platos_vigentes=Platos.objects.filter(vigente=1).order_by('nombre')
+    #Menus.objects.filter(fecha="2021-03-05").delete()
 
-    return HttpResponse('Se envio el menu del dia de hoy')  
+    for menu in total_menus:
+        ultimo=menu.nombre
+    split=ultimo.split()
+    
+    arreglo = []
+    arreglo_fragmento = []
+    i = 1
+    while i <= int(split[1]):
+        
+        arreglo_fragmento = []
+        for menu in total_menus:
+            
+            if menu.nombre == 'Opcion ' + str(i):
+                
+                for plato in platos_vigentes:
+                    if plato.id == menu.id_platos:
+                        arreglo_fragmento.append({'name': plato.nombre,'id_plato': plato.id, 'nombre_opcion': 'Opcion ' + str(i), 'fecha': menu.fecha}) 
+                
+
+        while len(arreglo_fragmento) < 4:    
+        
+            arreglo_fragmento.append({'name': 'Sin plato','id_plato': 0, 'nombre_opcion': 'Opcion ' + str(i), 'fecha': menu.fecha})    
+                
+            
+        arreglo.append(arreglo_fragmento)
+        i += 1      
+    
+    return render(request, "menu_del_dia.html", {"tipo_pedido":'temprano', "hoy":now, "fecha_arr":fecha_arr,"arr_arreglo":arreglo,"platos_vigentes":platos_vigentes, "date_arr":fecha_arr[0]+'-'+fecha_arr[1]+'-'+fecha_arr[2]})    
+
+def enviar_menu_v(request):    
+    payload = '{"text":"El menu de hoy es http://127.0.0.1:8000/solo_menu/9b1deb3d-3b7d-4bsd-9zdd-2b0d7b3dcb6d"}'
+    response = requests.post('https://hooks.slack.com/services/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',
+    data=payload)
+
+    return render(request, "volver.html", {"mensaje":'Se envio el Menu mas rico de la historia '})
 
 def suma(x, y):
 
@@ -45,9 +95,7 @@ def login_res(request):
         
         ped.save()
 
-
-        return HttpResponse('Se ingreso gestion Pedido')
-
+        return render(request, "volver.html", {"mensaje":'Se ingreso gestion Pedido '})
 
     if request.GET["rut"]:
 
@@ -79,7 +127,7 @@ def login_res(request):
             if now.hour < opcion[0].tope:
                 
                 if pedido == None:
-                    #return HttpResponse(fecha_arr[1])
+                    
                     total_menus=Menus.objects.filter(fecha=fecha_arr[0]+'-'+fecha_arr[1]+'-'+fecha_arr[2],vigente=1).order_by('nombre')
                     
                     platos_vigentes=Platos.objects.filter(vigente=1).order_by('nombre')
@@ -119,7 +167,7 @@ def login_res(request):
                     return render(request, "login_cliente.html", {"cliente":cliente, "tipo_pedido":'temprano', "hoy":now, "ultimo":pedido, "comio":1})
 
                 else:
-                    #return HttpResponse(fecha_arr[1])
+                    
                     total_menus=Menus.objects.filter(fecha=fecha_arr[0]+'-'+fecha_arr[1]+'-'+fecha_arr[2],vigente=1).order_by('nombre')
                     
                     platos_vigentes=Platos.objects.filter(vigente=1).order_by('nombre')
@@ -161,9 +209,8 @@ def login_res(request):
     else:
 
         mensaje="No has ingresado nada"
-
-    return HttpResponse(mensaje)
-
+        
+    return render(request, "volver.html", {"mensaje":mensaje})
 
 def menus_v(request):
     
@@ -187,8 +234,7 @@ def menus_v(request):
                 z += 1
 
             x += 1
-
-        return HttpResponse('Se ha ingresado el Menu') 
+        return render(request, "volver.html", {"mensaje":'Se ha ingresado el Menu'}) 
 
     num_menus=request.GET["num_menus"]    
     arr_opciones = []
@@ -204,16 +250,12 @@ def menus_v(request):
 
 def modificar_menus_v(request):
     
-    if request.method=="POST":
-        #Menus.objects.filter(fecha="2021-03-06").delete()
-        #return HttpResponse(request.POST["opcions_hidden_nombre_1"])
+    if request.method=="POST":                
                 
         num_opciones=request.POST["mum_opcions_hidden"]        
         date=request.POST["date"]
 
-        Menus.objects.filter(fecha=request.POST["date"]).delete()
-        
-        #return HttpResponse('se borro')
+        Menus.objects.filter(fecha=request.POST["date"]).delete()        
 
         x = 1
         while x <= int(num_opciones):                        
@@ -228,9 +270,8 @@ def modificar_menus_v(request):
                 z += 1
 
             x += 1
-
-        return HttpResponse('Se ha Modificado el Menu') 
-
+       
+        return render(request, "volver.html", {"mensaje":'Se ha Modificado el Menu'}) 
 
     date=request.GET["date"]
     date_arr=date.split("-")    
@@ -280,7 +321,7 @@ def platos_v(request):
             plato.save()
             x += 1
 
-        return HttpResponse('Se insertaron todos los datos') 
+        return render(request, "volver.html", {"mensaje":'Se insertaron todos los datos'}) 
 
     num_platos=request.GET["num_platos"]    
     arr = []

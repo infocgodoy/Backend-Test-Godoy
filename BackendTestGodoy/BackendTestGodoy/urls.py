@@ -27,6 +27,7 @@ urlpatterns = [
     path('modificar_menu/', views.modificar_menus_v),
     path('nuevos_platos/', views.platos_v),
     path('ver_pedidos/', views.ver_pedidos_v),
-    path('enviar_menu/', views.enviar_menu_v), 
+    path('enviar_menu/', views.enviar_menu_v),
+    path('solo_menu/9b1deb3d-3b7d-4bsd-9zdd-2b0d7b3dcb6d', views.solo_menu_v), 
     
 ]
